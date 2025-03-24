@@ -1,0 +1,7 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+.venv/
+*.DS_Store
+notes.txt
