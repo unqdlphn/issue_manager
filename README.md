@@ -203,9 +203,6 @@ Current coverage metrics:
 
 ## Screenshots
 
-![Adding a new issue](images/list_current_issues.png)
-*Screenshot: Listing current issues*
-
 ![Listing current issues](images/exit_back_up_issues.png)
 *Screenshot: Export to csv when exiting the app*
 
