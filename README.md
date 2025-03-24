@@ -1,4 +1,4 @@
-# Issue Manager 1.0
+# Issue Manager 1
 
 ![Issue Manager Header](images/issue_manager_header.png)
 
