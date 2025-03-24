@@ -5,3 +5,21 @@ __pycache__/
 .venv/
 *.DS_Store
 notes.txt
+
+# Coverage reports
+htmlcov/
+.coverage
+coverage.xml
+
+# Test cache
+.pytest_cache/
+__pycache__/
+*.py[cod]
+
+# Test database files
+*.db
+tests/*.db
+
+# Test temporary files
+temp-*.csv
+*.tmp
