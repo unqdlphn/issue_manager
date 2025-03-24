@@ -1,0 +1,94 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.1, pytest-8.3.5, pluggy-1.5.0 -- /Users/torreyadams/.pyenv/versions/3.13.1/bin/python3.13
+cachedir: .pytest_cache
+rootdir: /Users/torreyadams/issue_manager
+configfile: pytest.ini
+testpaths: tests
+plugins: cov-6.0.0, Faker-37.0.0
+collecting ... collected 94 items
+
+tests/test_database.py::TestDatabase::test_get_connection PASSED         [  1%]
+tests/test_database.py::TestDatabase::test_transaction PASSED            [  2%]
+tests/test_database.py::TestDatabase::test_initialize_database PASSED    [  3%]
+tests/test_database.py::TestDatabase::test_initialize_database_existing_table PASSED [  4%]
+tests/test_database.py::TestDatabase::test_migrate_data_to_fit_constraints PASSED [  5%]
+tests/test_database.py::TestDatabase::test_execute_query PASSED          [  6%]
+tests/test_database.py::TestDatabase::test_execute_insert PASSED         [  7%]
+tests/test_database.py::TestDatabase::test_create_issue PASSED           [  8%]
+tests/test_database.py::TestDatabase::test_get_all_issues PASSED         [  9%]
+tests/test_database.py::TestDatabase::test_get_issue_by_id PASSED        [ 10%]
+tests/test_database.py::TestDatabase::test_update_issue PASSED           [ 11%]
+tests/test_database.py::TestDatabase::test_delete_issue PASSED           [ 12%]
+tests/test_database.py::TestDatabase::test_export_to_csv PASSED          [ 13%]
+tests/test_database.py::TestDatabase::test_create_backup PASSED          [ 14%]
+tests/test_database.py::TestDatabase::test_restore_from_backup PASSED    [ 15%]
+tests/test_database.py::TestDatabase::test_search_issues PASSED          [ 17%]
+tests/test_database.py::TestDatabase::test_get_issues_by_status PASSED   [ 18%]
+tests/test_database.py::TestDatabase::test_optimize_database PASSED      [ 19%]
+tests/test_database.py::TestDatabase::test_get_database_stats PASSED     [ 20%]
+tests/test_database.py::TestDatabase::test_execute_batch PASSED          [ 21%]
+tests/test_database.py::TestDatabase::test_execute_script PASSED         [ 22%]
+tests/test_database.py::TestDatabase::test_create_issues_batch PASSED    [ 23%]
+tests/test_database.py::TestDatabase::test_get_connection_info PASSED    [ 24%]
+tests/test_database.py::TestDatabase::test_enable_full_text_search PASSED [ 25%]
+tests/test_database.py::TestDatabase::test_full_text_search PASSED       [ 26%]
+tests/test_database.py::TestDatabase::test_complete_database_setup PASSED [ 27%]
+tests/test_direct_coverage.py::TestDirectCoverage::test_issue_save_direct PASSED [ 28%]
+tests/test_direct_coverage.py::TestDirectCoverage::test_issue_update_direct PASSED [ 29%]
+tests/test_direct_coverage.py::TestDirectCoverage::test_issue_delete_direct PASSED [ 30%]
+tests/test_direct_coverage.py::TestDirectCoverage::test_export_to_csv_direct PASSED [ 31%]
+tests/test_edge_cases.py::TestEdgeCases::test_list_issues_archived PASSED [ 32%]
+tests/test_edge_cases.py::TestEdgeCases::test_edit_issue_detailed PASSED [ 34%]
+tests/test_edge_cases.py::TestEdgeCases::test_edit_issue_status_archived PASSED [ 35%]
+tests/test_edge_cases.py::TestEdgeCases::test_edit_issue_invalid_status PASSED [ 36%]
+tests/test_edge_cases.py::TestEdgeCases::test_archive_resolved_issue_success PASSED [ 37%]
+tests/test_edge_cases.py::TestEdgeCases::test_delete_issue_not_found PASSED [ 38%]
+tests/test_edge_cases.py::TestEdgeCases::test_search_issues_empty_term PASSED [ 39%]
+tests/test_edge_cases.py::TestEdgeCases::test_configure_readline_create_file PASSED [ 40%]
+tests/test_interactive_functions.py::TestInteractiveFunctions::test_add_issue_max_issues PASSED [ 41%]
+tests/test_interactive_functions.py::TestInteractiveFunctions::test_add_issue_empty_title PASSED [ 42%]
+tests/test_interactive_functions.py::TestInteractiveFunctions::test_add_issue_empty_description PASSED [ 43%]
+tests/test_interactive_functions.py::TestInteractiveFunctions::test_add_issue_long_inputs PASSED [ 44%]
+tests/test_interactive_functions.py::TestInteractiveFunctions::test_edit_issue_nonexistent PASSED [ 45%]
+tests/test_interactive_functions.py::TestInteractiveFunctions::test_edit_issue_invalid_id PASSED [ 46%]
+tests/test_interactive_functions.py::TestInteractiveFunctions::test_edit_archived_issue PASSED [ 47%]
+tests/test_interactive_functions.py::TestInteractiveFunctions::test_archive_nonresolved_issue PASSED [ 48%]
+tests/test_interactive_functions.py::TestInteractiveFunctions::test_archive_invalid_id PASSED [ 50%]
+tests/test_interactive_functions.py::TestInteractiveFunctions::test_delete_nonopen_issue PASSED [ 51%]
+tests/test_interactive_functions.py::TestInteractiveFunctions::test_truncate_text_edge_cases PASSED [ 52%]
+tests/test_issue_manager.py::TestIssueManager::test_create_table PASSED  [ 53%]
+tests/test_issue_manager.py::TestIssueManager::test_add_issue PASSED     [ 54%]
+tests/test_issue_manager.py::TestIssueManager::test_add_issue_cancel PASSED [ 55%]
+tests/test_issue_manager.py::TestIssueManager::test_list_issues_empty PASSED [ 56%]
+tests/test_issue_manager.py::TestIssueManager::test_list_issues PASSED   [ 57%]
+tests/test_issue_manager.py::TestIssueManager::test_edit_issue PASSED    [ 58%]
+tests/test_issue_manager.py::TestIssueManager::test_edit_issue_cancel PASSED [ 59%]
+tests/test_issue_manager.py::TestIssueManager::test_archive_issue PASSED [ 60%]
+tests/test_issue_manager.py::TestIssueManager::test_delete_issue PASSED  [ 61%]
+tests/test_issue_manager.py::TestIssueManager::test_search_issues PASSED [ 62%]
+tests/test_issue_manager.py::TestIssueManager::test_search_issues_no_results PASSED [ 63%]
+tests/test_issue_manager.py::TestIssueManager::test_show_archived PASSED [ 64%]
+tests/test_issue_manager.py::TestIssueManager::test_show_archived_empty PASSED [ 65%]
+tests/test_issue_manager.py::TestIssueManager::test_export_all_issues PASSED [ 67%]
+tests/test_issue_manager.py::TestIssueManager::test_configure_readline PASSED [ 68%]
+tests/test_issue_manager.py::TestIssueManager::test_main_exit PASSED     [ 69%]
+tests/test_issue_manager.py::TestIssueManager::test_main_menu_options PASSED [ 70%]
+tests/test_issue_manager.py::TestIssueManager::test_main_process_another_no PASSED [ 71%]
+tests/test_issue_manager.py::TestIssueManager::test_main_invalid_choice PASSED [ 72%]
+tests/test_issue_manager.py::TestIssueManager::test_main_keyboard_interrupt 
+
+---------- coverage: platform darwin, python 3.13.1-final-0 ----------
+Name                   Stmts   Miss  Cover
+------------------------------------------
+src/database.py          253     15    94%
+src/issue_manager.py     375     56    85%
+src/models.py             63      9    86%
+------------------------------------------
+TOTAL                    691     80    88%
+Coverage HTML written to dir htmlcov
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/Users/torreyadams/.pyenv/versions/3.13.1/lib/python3.13/unittest/mock.py:1226: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+============================== 68 passed in 0.68s ==============================

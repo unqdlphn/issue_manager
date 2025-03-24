@@ -1,8 +1,10 @@
 MIT License
 
-Copyright (c) 2025 
+Copyright (c) 2025 Torrey L. Adams
 
-by Torrey Adams, Copilot GPT4 by Microsoft, Gemini AI Studio and Gemini 1.5 by Google
+Logic and Instruction: Torrey L. Adams
+Code: Copilot GPT4 by Microsoft 
+Research: Gemini AI Studio and Gemini 1.5 by Google
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to use,
