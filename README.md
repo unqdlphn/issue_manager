@@ -1,6 +1,6 @@
 # Issue Manager 1
 
-![Issue Manager Header](images/issue_manager_header.png)
+![Issue Manager Header](images/readme_header.png)
 
 Issue Manager is a simple command-line application for managing issues. It allows you to add, list, edit, archive, delete, and search for issues. The application uses SQLite for data storage and supports exporting issues to CSV files.
 
@@ -203,8 +203,11 @@ Current coverage metrics:
 
 ## Screenshots
 
-![Listing current issues](images/exit_back_up_issues.png)
-*Screenshot: Export to csv when exiting the app*
+![Adding and Issue](images/add_issue.png)
+*Screenshot: Adding an issue*
+
+![Export issues to CSV](images/export_issues.png)
+*Screenshot: Export issues to CSV when exiting the app*
 
 ![Searching for issues](images/search_issues.png)
 *Screenshot: Searching for issues by keyword*
