@@ -199,18 +199,17 @@ Current coverage metrics:
 | database.py      | 94%      |
 | issue_manager.py | 85%      |
 | models.py        | 86%      |
-|------------------------------
 | **TOTAL**        | **88%**  |
 
 ## Screenshots
 
-![Adding a new issue](images/screenshot_add_issue.png)
-*Screenshot: Adding a new issue through the command line interface*
+![Adding a new issue](images/list_current_issues.png)
+*Screenshot: Listing current issues*
 
-![Listing current issues](images/screenshot_list_issues.png)
-*Screenshot: Viewing the list of current issues*
+![Listing current issues](images/exit_back_up_issues.png)
+*Screenshot: Export to csv when exiting the app*
 
-![Searching for issues](images/screenshot_search.png)
+![Searching for issues](images/search_issues.png)
 *Screenshot: Searching for issues by keyword*
 
 ## Example
