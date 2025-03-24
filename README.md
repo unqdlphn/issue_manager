@@ -2,7 +2,7 @@
 
 ![Issue Manager Header](images/readme_header.png)
 
-Issue Manager is a simple command-line application for managing issues. It allows you to add, list, edit, archive, delete, and search for issues. The application uses SQLite for data storage and supports exporting issues to CSV files.
+Issue Manager is a simple open-source command-line application for managing issues. It allows you to add, list, edit, archive, delete, and search for issues. The application uses SQLite for data storage and supports exporting issues to CSV files.
 
 ## Features
 
