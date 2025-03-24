@@ -5,6 +5,7 @@ __pycache__/
 .venv/
 *.DS_Store
 notes.txt
+pyvenv.cfg
 
 # Coverage reports
 htmlcov/
