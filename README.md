@@ -105,6 +105,103 @@ python issue_manager.py  # Use python3 on some systems
 8. **Delete Issue**: Remove an open issue
 9. **Exit**: Close the application
 
+## User Guide
+
+### Adding an Issue
+1. Select option `1` from the main menu
+2. Enter a title (maximum 100 characters)
+3. Enter a description (maximum 500 characters)
+4. Enter tags (comma-separated, maximum 5 tags)
+5. Confirm by typing `y`
+
+### Listing Current Issues
+1. Select option `2` from the main menu
+2. View the tabulated list of all non-archived issues
+3. Issues are displayed with ID, title, description, status, tags, and date
+
+### Editing an Issue
+1. Select option `3` from the main menu
+2. Enter the ID of the issue you want to edit
+3. For each field, press Enter to keep the current value or type a new value
+4. For status, choose one of the following options:
+   - Type `o` for Open
+   - Type `i` for In Progress
+   - Type `r` for Resolved
+   - Type `a` for Archived
+   - (You can also type the full status name)
+5. If status is set to Resolved, enter a resolution
+6. Confirm changes by typing `y`
+
+### Archiving an Issue
+1. Select option `4` from the main menu
+2. Enter the ID of the resolved issue you want to archive
+3. Confirm by typing `y`
+4. Note: Only issues with status "Resolved" can be archived
+
+### Viewing Archived Issues
+1. Select option `5` from the main menu
+2. View the tabulated list of all archived issues
+
+### Exporting to CSV
+1. Select option `6` from the main menu
+2. All issues will be exported to a CSV file named `all_issues.csv`
+
+### Searching for Issues
+1. Select option `7` from the main menu
+2. Enter a search term
+3. View all issues that match the search term in title, description, status, or tags
+
+### Deleting an Issue
+1. Select option `8` from the main menu
+2. View the list of open issues (only open issues can be deleted)
+3. Enter the ID of the issue you want to delete
+4. Confirm by typing `y`
+
+## Testing
+
+The project includes a comprehensive test suite with 88% code coverage, ensuring reliability and stability.
+
+### Running Tests
+
+To run the test suite:
+
+```bash
+pytest
+```
+
+To run tests with coverage reporting:
+
+```bash
+# Run tests and generate coverage data
+pytest --cov=src --cov-report=html > tests/test_errors.txt
+
+# View the HTML coverage report
+open htmlcov/index.html
+```
+
+### Test Organization
+
+Tests are organized into several modules:
+
+- `test_database.py` - Tests for database connection and operations
+- `test_models.py` - Tests for the Issue model class
+- `test_issue_manager.py` - Tests for core application functionality
+- `test_direct_coverage.py` - Tests for ensuring direct code coverage
+- `test_interactive_functions.py` - Tests for user input handling
+- `test_edge_cases.py` - Tests for edge cases and error handling
+
+### Coverage Report
+
+Current coverage metrics:
+
+| Component        | Coverage |
+|------------------|----------|
+| database.py      | 94%      |
+| issue_manager.py | 85%      |
+| models.py        | 86%      |
+|------------------------------
+| **TOTAL**        | **88%**  |
+
 ## Screenshots
 
 ![Adding a new issue](images/screenshot_add_issue.png)
