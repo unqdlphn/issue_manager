@@ -3,12 +3,14 @@ import datetime
 import csv
 import tabulate
 import readline  # Import readline for enhanced input editing capabilities
+import os
 from models import Issue  # Import the Issue class from models.py
 
 DATABASE_FILE = "issues.db"
 ALL_ISSUES_FILE = "all_issues.csv"
 ARCHIVE_FILE = "issue_archives.csv"  # Updated variable
 MAX_ISSUES = 7  # Maximum number of issues allowed
+HISTORY_FILE = os.path.expanduser('~/.issue_manager_history')
 
 def export_to_csv(data, filename, append=False):
     """
@@ -57,20 +59,32 @@ def add_issue():
         print("--------------------\n")
         return
 
-    title = input("Enter title: ").strip()
+    title = input("Enter title (max 100 chars): ").strip()
     if not title:
         print("--------------------")
         print("Title cannot be empty.")
         print("--------------------\n")
         return
-    description = input("Enter description: ").strip()
+    if len(title) > 100:
+        title = title[:100]
+        print("Title truncated to 100 characters.")
+        
+    description = input("Enter description (max 500 chars): ").strip()
     if not description:
         print("--------------------")
         print("Description cannot be empty.")
         print("--------------------\n")
         return
-    tags_input = input("Enter tags (comma separated): ").strip()
+    if len(description) > 500:
+        description = description[:500]
+        print("Description truncated to 500 characters.")
+        
+    tags_input = input("Enter tags (comma separated, max 5 tags): ").strip()
     tags = [tag.strip() for tag in tags_input.split(",")] if tags_input else []
+    if len(tags) > 5:
+        tags = tags[:5]
+        print("Limited to first 5 tags.")
+        
     new_issue = Issue(title, description, tags=tags)
     confirm = input("\nAre you sure you want to add this issue? (y/n): ").strip().lower()
     if confirm == 'y':
@@ -93,18 +107,18 @@ def list_issues(show_archived=False):
         print("--------------------")
         for issue in issues:
             if issue.status == "Archived":
-                print(f"ID: {issue.id}, Title: {issue.title}, Date: {issue.date}")
-                print(f"Description: {issue.description}")
+                print(f"ID: {issue.id}, Title: {truncate_text(issue.title, 30)}, Date: {issue.date}")
+                print(f"Description: {truncate_text(issue.description, 60)}")
                 print(f"Status: {issue.status}")
-                print(f"Resolution: {issue.resolution}")
+                print(f"Resolution: {truncate_text(issue.resolution, 60)}")
                 print("--------------------\n")
     else:
         print("\nCurrent Issues")
         print("--------------------")
         for issue in issues:
             if issue.status != "Archived":
-                print(f"ID: {issue.id}, Title: {issue.title}, Date: {issue.date}")
-                print(f"Description: {issue.description}")
+                print(f"ID: {issue.id}, Title: {truncate_text(issue.title, 30)}, Date: {issue.date}")
+                print(f"Description: {truncate_text(issue.description, 60)}")
                 print(f"Status: {issue.status}")
                 print("--------------------\n")
 
@@ -123,16 +137,37 @@ def edit_issue():
     issues = Issue.load_all()
     for issue in issues:
         if issue.id == issue_id:
-            issue.title = input(f"Enter new title ({issue.title}): ").strip() or issue.title
-            issue.description = input(f"Enter new description ({issue.description}): ").strip() or issue.description
-            new_tags_input = input(f"Enter new tags (comma separated) ({', '.join(issue.tags)}): ").strip()
+            new_title = input(f"Enter new title (max 100 chars) ({issue.title}): ").strip()
+            if new_title:
+                if len(new_title) > 100:
+                    new_title = new_title[:100]
+                    print("Title truncated to 100 characters.")
+                issue.title = new_title
+            
+            new_description = input(f"Enter new description (max 500 chars) ({issue.description}): ").strip()
+            if new_description:
+                if len(new_description) > 500:
+                    new_description = new_description[:500]
+                    print("Description truncated to 500 characters.")
+                issue.description = new_description
+                
+            new_tags_input = input(f"Enter new tags (comma separated, max 5) ({', '.join(issue.tags)}): ").strip()
             if new_tags_input:
-                issue.tags = [tag.strip() for tag in new_tags_input.split(",")]
+                new_tags = [tag.strip() for tag in new_tags_input.split(",")]
+                if len(new_tags) > 5:
+                    new_tags = new_tags[:5]
+                    print("Limited to first 5 tags.")
+                issue.tags = new_tags
+                
             new_status = input(f"Enter new status ({issue.status}) (Open, In Progress, Resolved, Archived): ").strip()
             if new_status in ["Open", "In Progress", "Resolved", "Archived"]:
                 issue.status = new_status
                 if new_status == "Resolved":
-                    issue.resolution = input("\nHow was the issue resolved? ").strip() or "None"
+                    resolution = input("\nHow was the issue resolved? (max 200 chars): ").strip()
+                    if len(resolution) > 200:
+                        resolution = resolution[:200]
+                        print("Resolution truncated to 200 characters.")
+                    issue.resolution = resolution or "None"
             issue.modified = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             confirm = input("\nAre you sure you want to edit this issue? (y/n): ").strip().lower()
             if confirm == 'y':
@@ -218,6 +253,14 @@ def delete_issue():
             return
     print("Issue not found.")
 
+def truncate_text(text, max_length=50):
+    """
+    Truncate text to a maximum length and add ellipsis if needed.
+    """
+    if text and len(text) > max_length:
+        return text[:max_length-3] + "..."
+    return text
+
 def show_archived():
     """
     List all archived issues as a table.
@@ -232,7 +275,15 @@ def show_archived():
         return
     
     headers = ["ID", "Title", "Description", "Status", "Resolution", "Date", "Modified"]
-    table = [[issue.id, issue.title, issue.description, issue.status, issue.resolution, issue.date, issue.modified] for issue in archived_issues]
+    table = [[
+        issue.id, 
+        truncate_text(issue.title, 30),
+        truncate_text(issue.description, 50), 
+        issue.status, 
+        truncate_text(issue.resolution, 30),
+        issue.date, 
+        issue.modified
+    ] for issue in archived_issues]
     
     print("\nArchived Issues")
     print(tabulate.tabulate(table, headers, tablefmt="grid"))
@@ -267,7 +318,16 @@ def search_issues():
     
     if matching_issues:
         headers = ["ID", "Title", "Description", "Status", "Resolution", "Date", "Modified", "Tags"]
-        table = [[issue.id, issue.title, issue.description, issue.status, issue.resolution, issue.date, issue.modified, ", ".join(issue.tags)] for issue in matching_issues]
+        table = [[
+            issue.id, 
+            truncate_text(issue.title, 30),
+            truncate_text(issue.description, 50), 
+            issue.status, 
+            truncate_text(issue.resolution, 30),
+            issue.date, 
+            issue.modified, 
+            truncate_text(", ".join(issue.tags), 30)
+        ] for issue in matching_issues]
         print("\nSearch Results")
         print(tabulate.tabulate(table, headers, tablefmt="grid"))
     else:
@@ -275,60 +335,89 @@ def search_issues():
         print("No issues found matching the search term.")
         print("--------------------\n")
 
+def configure_readline():
+    """
+    Configure readline for enhanced command line editing and history.
+    """
+    # Set the maximum number of history items to save
+    readline.set_history_length(1000)
+    
+    # Create history file if it doesn't exist
+    if not os.path.exists(HISTORY_FILE):
+        with open(HISTORY_FILE, 'w'):
+            pass
+    
+    # Read history file
+    try:
+        readline.read_history_file(HISTORY_FILE)
+    except FileNotFoundError:
+        pass
+        
+    # Enable auto-completion with Tab key
+    readline.parse_and_bind('tab: complete')
+
 def main():
     """
     Main function to display the menu and handle user input.
     """
     create_table()
-    while True:
-        print("\nIssue Manager 1.0 (Beta) ")
-        print("--------------------")
-        print("1. Add Issue")
-        print("2. List Current Issues")
-        print("3. Edit Issue")
-        print("4. Archive Issue")
-        print("5. List Archived Issues")
-        print("6. Export All Issues to CSV")
-        print("7. Search Issues")
-        print("8. Delete Issue")
-        print("9. Exit")
-        choice = input("\nEnter choice: ").strip().lower()
-        if choice == "1":
-            add_issue()
-        elif choice == "2":
-            list_issues()
-        elif choice == "3":
-            edit_issue()
-        elif choice == "4":
-            archive_issue()
-        elif choice == "5":
-            show_archived()
-        elif choice == "6":
-            export_all_issues()
-        elif choice == "7":
-            search_issues()
-        elif choice == "8":
-            delete_issue()
-        elif choice == "9":
-            break
-        else:
-            print("\nInvalid choice. Please enter a number between 1 and 9.")
-        
-        # Ask the user if they want to enter a new issue
+    configure_readline()  # Configure readline for input enhancement
+    
+    try:
         while True:
-            new_issue_choice = input("\nProcess another issue? y/n: ").strip().upper()
-            if new_issue_choice == "Y":
-                break
-            elif new_issue_choice == "N":
+            print("\nIssue Manager 1.0 (Beta) ")
+            print("--------------------")
+            print("1. Add Issue")
+            print("2. List Current Issues")
+            print("3. Edit Issue")
+            print("4. Archive Issue")
+            print("5. List Archived Issues")
+            print("6. Export All Issues to CSV")
+            print("7. Search Issues")
+            print("8. Delete Issue")
+            print("9. Exit")
+            choice = input("\nEnter choice: ").strip().lower()
+            if choice == "1":
+                add_issue()
+            elif choice == "2":
+                list_issues()
+            elif choice == "3":
+                edit_issue()
+            elif choice == "4":
+                archive_issue()
+            elif choice == "5":
+                show_archived()
+            elif choice == "6":
                 export_all_issues()
-                return
+            elif choice == "7":
+                search_issues()
+            elif choice == "8":
+                delete_issue()
+            elif choice == "9":
+                break
             else:
-                print("\nInvalid choice. Please enter 'y' or 'n'.")
+                print("\nInvalid choice. Please enter a number between 1 and 9.")
+            
+            # Ask the user if they want to enter a new issue
+            while True:
+                new_issue_choice = input("\nProcess another issue? y/n: ").strip().upper()
+                if new_issue_choice == "Y":
+                    break
+                elif new_issue_choice == "N":
+                    export_all_issues()
+                    return
+                else:
+                    print("\nInvalid choice. Please enter 'y' or 'n'.")
+    finally:
+        # Save command history when exiting
+        readline.write_history_file(HISTORY_FILE)
 
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
+        # Save history even when interrupted
+        readline.write_history_file(HISTORY_FILE)
         print("\n--------------------")
         print("Issue terminated.")
         print("--------------------\n")
