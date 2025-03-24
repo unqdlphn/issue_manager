@@ -365,7 +365,7 @@ def main():
     
     try:
         while True:
-            print("\nIssue Manager 1.0 (Beta) ")
+            print("\nIssue Manager 1.1")
             print("--------------------")
             print("1. Add Issue")
             print("2. List Current Issues")
