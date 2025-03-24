@@ -1,7 +1,9 @@
 import sqlite3
 import datetime
+import os
 
-DATABASE_FILE = "issues.db"
+# Use the same database path as in database.py
+DATABASE_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "issues.db")
 
 class Issue:
     def __init__(self, title, description, status="Open", resolution=None, tags=None):
@@ -14,6 +16,9 @@ class Issue:
         self.tags = tags if tags else []
 
     def save(self):
+        # Ensure data directory exists
+        os.makedirs(os.path.dirname(DATABASE_FILE), exist_ok=True)
+        
         conn = sqlite3.connect(DATABASE_FILE)
         try:
             with conn:
