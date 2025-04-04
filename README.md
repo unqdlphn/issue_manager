@@ -228,16 +228,15 @@ Issue Manager 1.0
 
 Enter choice: 1
 Enter title: Example Issue
-Enter description: This is an example issue.
+Enter Description: This is an example issue.
 Enter tags (comma separated): example, test
 Are you sure you want to add this issue? (y/n): y
---------------------
+
+---------------------
 Issue added.
---------------------
+_____________________
 
-## License
 
-© 2025 Torrey L. Adams
-All rights reserved.
+2025 Built by Torrey L. Adams 
 
 This project is licensed under the MIT License.
